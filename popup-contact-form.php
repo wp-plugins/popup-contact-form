@@ -4,7 +4,7 @@
 Plugin Name: Popup contact form
 Description: Plugin allows user to creat and add the popup contact forms easily on the website. That popup contact form let user to send the emails to site admin.
 Author: Gopi.R
-Version: 4.0
+Version: 4.1
 Plugin URI: http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/
 Author URI: http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/
 Donate link: http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/

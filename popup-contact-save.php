@@ -1,4 +1,10 @@
 <?php
+/*
+*     Popup contact form
+*     Copyright (C) 2011 - 2013 www.gopiplus.com
+*     http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/
+*/
+
 session_start();
 $PopupContact_abspath = dirname(__FILE__);
 $PopupContact_abspath_1 = str_replace('wp-content/plugins/popup-contact-form', '', $PopupContact_abspath);
