@@ -4,7 +4,7 @@
 Plugin Name: Popup contact form
 Description: Plugin allows user to creat and add the popup contact forms easily on the website. That popup contact form let user to send the emails to site admin.
 Author: Gopi.R
-Version: 4.1
+Version: 5.0
 Plugin URI: http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/
 Author URI: http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/
 Donate link: http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/
@@ -114,97 +114,14 @@ function PopupContact_widget_init()
 
 function PopupContact_deactivation() 
 {
-
+	// No action required.
 }
 
 function PopupContact_admin()
 {
-	echo '<div class="wrap">';
-	echo '<h2>Popup contact form</h2>';
-	global $wpdb, $wp_version;
-	$PopupContact_title = get_option('PopupContact_title');
-	$PopupContact_On_Homepage = get_option('PopupContact_On_Homepage');
-	$PopupContact_On_Posts = get_option('PopupContact_On_Posts');
-	$PopupContact_On_Pages = get_option('PopupContact_On_Pages');
-	$PopupContact_On_Search = get_option('PopupContact_On_Search');
-	$PopupContact_On_Archives = get_option('PopupContact_On_Archives');
-	$PopupContact_On_MyEmail = get_option('PopupContact_On_MyEmail');
-	$PopupContact_On_Subject = get_option('PopupContact_On_Subject');
-	$PopupContact_Caption = get_option('PopupContact_Caption');
-	
-	if (@$_POST['PopupContact_submit']) 
-	{
-		$PopupContact_title = stripslashes($_POST['PopupContact_title']);
-		$PopupContact_On_Homepage = stripslashes($_POST['PopupContact_On_Homepage']);
-		$PopupContact_On_Posts = stripslashes($_POST['PopupContact_On_Posts']);
-		$PopupContact_On_Pages = stripslashes($_POST['PopupContact_On_Pages']);
-		$PopupContact_On_Search = stripslashes($_POST['PopupContact_On_Search']);
-		$PopupContact_On_Archives = stripslashes($_POST['PopupContact_On_Archives']);
-		$PopupContact_On_MyEmail = stripslashes($_POST['PopupContact_On_MyEmail']);
-		$PopupContact_On_Subject = stripslashes($_POST['PopupContact_On_Subject']);
-		$PopupContact_Caption = stripslashes($_POST['PopupContact_Caption']);
-		
-		update_option('PopupContact_title', $PopupContact_title );
-		update_option('PopupContact_On_Homepage', $PopupContact_On_Homepage );
-		update_option('PopupContact_On_Posts', $PopupContact_On_Posts );
-		update_option('PopupContact_On_Pages', $PopupContact_On_Pages );
-		update_option('PopupContact_On_Search', $PopupContact_On_Search );
-		update_option('PopupContact_On_Archives', $PopupContact_On_Archives );
-		update_option('PopupContact_On_MyEmail', $PopupContact_On_MyEmail );
-		update_option('PopupContact_On_Subject', $PopupContact_On_Subject );
-		update_option('PopupContact_Caption', $PopupContact_Caption );
-	}
-	
-	echo '<form name="form_gCF" method="post" action="">';
-	
-	echo '<p>Title:<br><input  style="width: 350px;" type="text" value="';
-	echo $PopupContact_title . '" name="PopupContact_title" id="PopupContact_title" /></p>';
-	
-	echo '<p>On Homepage Display:<br><input  style="width: 100px;" type="text" value="';
-	echo $PopupContact_On_Homepage . '" name="PopupContact_On_Homepage" maxlength="3" id="PopupContact_On_Homepage" /> (YES/NO)</p>';
-	
-	echo '<p>On Posts Display:<br><input  style="width: 100px;" type="text" value="';
-	echo $PopupContact_On_Posts . '" name="PopupContact_On_Posts" maxlength="3" id="PopupContact_On_Posts" /> (YES/NO)</p>';
-	
-	echo '<p>On Pages Display:<br><input  style="width: 100px;" type="text" value="';
-	echo $PopupContact_On_Pages . '" name="PopupContact_On_Pages" maxlength="3" id="PopupContact_On_Pages" /> (YES/NO)</p>';
-	
-	echo '<p>On Search Display:<br><input  style="width: 100px;" type="text" value="';
-	echo $PopupContact_On_Search . '" name="PopupContact_On_Search" maxlength="3" id="PopupContact_On_Search" /> (YES/NO)</p>';
-	
-	echo '<p>On Archives Display:<br><input  style="width: 100px;" type="text" value="';
-	echo $PopupContact_On_Archives . '" name="PopupContact_On_Archives" maxlength="3" id="PopupContact_On_Archives" /> (YES/NO)</p>';
-	
-	echo '<p>Email Address:<br><input style="width: 350px;" type="text" value="';
-	echo $PopupContact_On_MyEmail . '" name="PopupContact_On_MyEmail" maxlength="200" id="PopupContact_On_MyEmail" /><br />';
-	echo '<span style="font-size:0.8em;">Enter your email address to receive the contact mails</span></p>';
-	
-	echo '<p>Email Subject:<br><input style="width: 350px;" type="text" value="';
-	echo $PopupContact_On_Subject . '" name="PopupContact_On_Subject" maxlength="200" id="PopupContact_On_Subject" /><br />';
-	echo '<span style="font-size:0.8em;">Enter contact mails subject</span></p>';
-	
-	echo '<p>Link Button/Text:<br><input style="width: 700px;" type="text" value="';
-	echo $PopupContact_Caption . '" name="PopupContact_Caption" id="PopupContact_Caption" /><br />';
-	echo '<span style="font-size:0.8em;">This box is to add the contact us Image or text, Entered value will display in the front end.</span></p>';
-	
-	echo '<input type="submit" id="PopupContact_submit" name="PopupContact_submit" lang="publish" class="button-primary" value="Update Setting" value="1" />';
-	
-	$help = "'http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/'";
-	echo '&nbsp;&nbsp;&nbsp;<input name="Help" lang="publish" class="button-primary" onclick="window.open('.$help.');" value="Help" type="button" />';
-	
-	echo '</form>';
-	
-	echo '<br /><strong>Plugin configuration</strong>';
-	echo '<ol>';
-	echo '<li>Drag and drop the widget</li>';
-	echo '<li>Paste the php code to your desired template location</li>';
-	echo '<li>Short code for pages and posts</li>';
-	echo '</ol>';
-	echo 'Note: Check official website for more info <a href="http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/" target="_blank">click here</a>';
-
-	echo '</div>';
+	global $wpdb;
+	include('content-setting.php');
 }
-
 
 function PopupContact_add_to_menu() 
 {
