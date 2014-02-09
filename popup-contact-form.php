@@ -1,10 +1,9 @@
 <?php
-
 /*
 Plugin Name: Popup contact form
 Description: Plugin allows user to creat and add the popup contact forms easily on the website. That popup contact form let user to send the emails to site admin.
 Author: Gopi.R
-Version: 5.0
+Version: 5.1
 Plugin URI: http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/
 Author URI: http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/
 Donate link: http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/
@@ -28,20 +27,20 @@ function PopupContact()
 <div style="display: none;" id="PopupContact_BoxContainer">
   <div id="PopupContact_BoxContainerHeader">
     <div id="PopupContact_BoxTitle"><?php echo get_option('PopupContact_title'); ?></div>
-    <div id="PopupContact_BoxClose"><a href="javascript:PopupContact_HideForm('PopupContact_BoxContainer','PopupContact_BoxContainerFooter');">Close</a></div>
+    <div id="PopupContact_BoxClose"><a href="javascript:PopupContact_HideForm('PopupContact_BoxContainer','PopupContact_BoxContainerFooter');"><?php _e('Close', 'popup-contact'); ?></a></div>
   </div>
   <div id="PopupContact_BoxContainerBody">
     <form action="#" name="PopupContact_Form" id="PopupContact_Form">
       <div id="PopupContact_BoxAlert"> <span id="PopupContact_alertmessage"></span> </div>
-      <div id="PopupContact_BoxLabel"> Your Name </div>
+      <div id="PopupContact_BoxLabel"> <?php _e('Your Name', 'popup-contact'); ?> </div>
       <div id="PopupContact_BoxLabel">
         <input name="PopupContact_name" class="PopupContact_TextBox" type="text" id="PopupContact_name" maxlength="120">
       </div>
-      <div id="PopupContact_BoxLabel"> Your Email </div>
+      <div id="PopupContact_BoxLabel"> <?php _e('Your Email', 'popup-contact'); ?> </div>
       <div id="PopupContact_BoxLabel">
         <input name="PopupContact_email" class="PopupContact_TextBox" type="text" id="PopupContact_email" maxlength="120">
       </div>
-      <div id="PopupContact_BoxLabel"> Enter Your Message </div>
+      <div id="PopupContact_BoxLabel"> <?php _e('Enter Your Message', 'popup-contact'); ?> </div>
       <div id="PopupContact_BoxLabel">
         <textarea name="PopupContact_message" class="PopupContact_TextArea" rows="3" id="PopupContact_message"></textarea>
       </div>
@@ -94,21 +93,21 @@ function PopupContact_widget($args)
 	
 function PopupContact_control() 
 {
-	echo 'To change the setting goto Popup contact form link on Setting menu.';
-	echo '<br><a href="options-general.php?page=popup-contact-form/popup-contact-form.php">';
-	echo 'click here</a></p>';
+	echo '<p>';
+	_e('Check official website for more information', 'popup-contact');
+	?> <a target="_blank" href="http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/"><?php _e('click here', 'popup-contact'); ?></a></p><?php
 }
 
 function PopupContact_widget_init()
 {
 	if(function_exists('wp_register_sidebar_widget')) 
 	{
-		wp_register_sidebar_widget('Popup contact form', 'Popup contact form', 'PopupContact_widget');
+		wp_register_sidebar_widget( __('Popup contact form', 'popup-contact'), __('Popup contact form', 'popup-contact'), 'PopupContact_widget');
 	}
 	
 	if(function_exists('wp_register_widget_control')) 
 	{
-		wp_register_widget_control('Popup contact form', array('Popup contact form', 'widgets'), 'PopupContact_control');
+		wp_register_widget_control( __('Popup contact form', 'popup-contact'), array(__('Popup contact form', 'popup-contact'), 'widgets'), 'PopupContact_control');
 	} 
 }
 
@@ -125,7 +124,7 @@ function PopupContact_admin()
 
 function PopupContact_add_to_menu() 
 {
-	add_options_page('Popup contact form', 'Popup contact form', 'manage_options', __FILE__, 'PopupContact_admin' );
+	add_options_page( __('Popup contact form', 'popup-contact'), __('Popup contact form', 'popup-contact'), 'manage_options', __FILE__, 'PopupContact_admin' );
 }
 
 if (is_admin()) 
@@ -164,20 +163,20 @@ function PopupContact_shortcode( $atts )
 	$html .= '<div style="display: none;" id="PopupContact_BoxContainer">';
 	  $html .= '<div id="PopupContact_BoxContainerHeader">';
 		$html .= '<div id="PopupContact_BoxTitle">'.$PopupContact_title.'</div>';
-		$html .= '<div id="PopupContact_BoxClose"><a href="'.$close.'">Close</a></div>';
+		$html .= '<div id="PopupContact_BoxClose"><a href="'.$close.'">'.__('Close', 'popup-contact').'</a></div>';
 	  $html .= '</div>';
 	  $html .= '<div id="PopupContact_BoxContainerBody">';
 		$html .= '<form action="#" name="PopupContact_Form" id="PopupContact_Form">';
 		  $html .= '<div id="PopupContact_BoxAlert"> <span id="PopupContact_alertmessage"></span> </div>';
-		  $html .= '<div id="PopupContact_BoxLabel_Page"> Your Name </div>';
+		  $html .= '<div id="PopupContact_BoxLabel_Page"> '.__('Your Name', 'popup-contact').' </div>';
 		  $html .= '<div id="PopupContact_BoxLabel_Page">';
 			$html .= '<input name="PopupContact_name" class="PopupContact_TextBox" type="text" id="PopupContact_name" maxlength="120">';
 		  $html .= '</div>';
-		  $html .= '<div id="PopupContact_BoxLabel_Page"> Your Email </div>';
+		  $html .= '<div id="PopupContact_BoxLabel_Page"> '.__('Your Email', 'popup-contact').' </div>';
 		  $html .= '<div id="PopupContact_BoxLabel_Page">';
 			$html .= '<input name="PopupContact_email" class="PopupContact_TextBox" type="text" id="PopupContact_email" maxlength="120">';
 		  $html .= '</div>';
-		  $html .= '<div id="PopupContact_BoxLabel_Page"> Enter Your Message </div>';
+		  $html .= '<div id="PopupContact_BoxLabel_Page"> '.__('Enter Your Message', 'popup-contact').' </div>';
 		  $html .= '<div id="PopupContact_BoxLabel_Page">';
 			$html .= '<textarea name="PopupContact_message" class="PopupContact_TextArea" rows="3" id="PopupContact_message"></textarea>';
 		  $html .= '</div>';
@@ -192,6 +191,12 @@ function PopupContact_shortcode( $atts )
 	return $html;
 }
 
+function PopupContact_textdomain() 
+{
+	  load_plugin_textdomain( 'popup-contact', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+}
+
+add_action('plugins_loaded', 'PopupContact_textdomain');
 add_shortcode( 'popup-contact-form', 'PopupContact_shortcode' );
 add_action('wp_enqueue_scripts', 'PopupContact_add_javascript_files');
 add_action("plugins_loaded", "PopupContact_widget_init");

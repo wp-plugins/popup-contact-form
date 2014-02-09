@@ -1,7 +1,7 @@
 <?php
 /*
 *     Popup contact form
-*     Copyright (C) 2011 - 2013 www.gopiplus.com
+*     Copyright (C) 2011 - 2014 www.gopiplus.com
 *     http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/
 */
 
@@ -39,10 +39,12 @@ if($PopupContact_name <> "" && $PopupContact_email <> "")
 		$mailtext = str_replace("\r\n", "<br />", $mailtext);
 		@wp_mail($PopupContact_On_MyEmail, $subject, $mailtext, $headers);
 	}
-	echo "Message sent successfully.";
+	//echo "Message sent successfully.";
+	_e('Message sent successfully.', 'popup-contact');
 }
 else
 {
-	echo "Please enter your name and email.";
+	//echo "Please enter your name and email.";
+	_e('Please enter your name and email.', 'popup-contact');
 }
 ?>
