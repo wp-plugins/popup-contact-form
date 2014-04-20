@@ -22,8 +22,8 @@ if($PopupContact_name <> "" && $PopupContact_email <> "")
 		
 	if($PopupContact_On_MyEmail <> "YOUR-EMAIL-ADDRESS-TO-RECEIVE-MAILS" && $PopupContact_On_MyEmail <> "")
 	{
-		$sender_email = mysql_real_escape_string(trim($PopupContact_email));
-		$sender_name = mysql_real_escape_string(trim($PopupContact_name));
+		$sender_email = esc_sql(trim($PopupContact_email));
+		$sender_name = esc_sql(trim($PopupContact_name));
 		$subject = $PopupContact_On_Subject;
 		$message = $PopupContact_message;				
 	
@@ -34,8 +34,8 @@ if($PopupContact_name <> "" && $PopupContact_email <> "")
 		$headers = "MIME-Version: 1.0" . "\r\n";
 		$headers .= "Content-type:text/html;charset=iso-8859-1" . "\r\n";
 		$headers .= "From: \"$sender_name\" <$sender_email>\n";
-		$headers .= "Return-Path: <" . mysql_real_escape_string(trim($PopupContact_email)) . ">\n";
-		$headers .= "Reply-To: \"" . mysql_real_escape_string(trim($PopupContact_name)) . "\" <" . mysql_real_escape_string(trim($PopupContact_email)) . ">\n";
+		$headers .= "Return-Path: <" . esc_sql(trim($PopupContact_email)) . ">\n";
+		$headers .= "Reply-To: \"" . esc_sql(trim($PopupContact_name)) . "\" <" . esc_sql(trim($PopupContact_email)) . ">\n";
 		$mailtext = str_replace("\r\n", "<br />", $mailtext);
 		@wp_mail($PopupContact_On_MyEmail, $subject, $mailtext, $headers);
 	}
