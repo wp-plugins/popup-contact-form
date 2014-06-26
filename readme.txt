@@ -5,8 +5,8 @@ Author URI: http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress
 Plugin URI: http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/
 Tags: popup, contact, contact form, gopiplus
 Requires at least: 3.4
-Tested up to: 3.9
-Stable tag: 5.2
+Tested up to: 3.9.1
+Stable tag: 5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,9 @@ Plugin *.po file (popup-contact.po) available in the languages folder.
 = 5.2 =
 1. Tested up to 3.9
 
+= 5.3 =
+1. Captcha removed from the plugin. Instead security check has been added in Popup Contact form submit page. With this new option Popup Contact form accept submission only from your website domain. It simply reject the submission other then your website domain. After plugin upgrade, Please deactivate and activate the plugin once.
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -113,3 +116,6 @@ Plugin *.po file (popup-contact.po) available in the languages folder.
 
 = 5.2 =
 1. Tested up to 3.9
+
+= 5.3 =
+1. Captcha removed from the plugin. Instead security check has been added in Popup Contact form submit page. With this new option Popup Contact form accept submission only from your website domain. It simply reject the submission other then your website domain. After plugin upgrade, Please deactivate and activate the plugin once.

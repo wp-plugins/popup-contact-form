@@ -13,6 +13,7 @@
 	$PopupContact_On_MyEmail = get_option('PopupContact_On_MyEmail');
 	$PopupContact_On_Subject = get_option('PopupContact_On_Subject');
 	$PopupContact_Caption = get_option('PopupContact_Caption');
+	$PopupContact_homeurl = get_option('PopupContact_homeurl');
 	
 	if (isset($_POST['PopupContact_form_submit']) && $_POST['PopupContact_form_submit'] == 'yes')
 	{
@@ -28,6 +29,7 @@
 		$PopupContact_On_MyEmail = stripslashes($_POST['PopupContact_On_MyEmail']);
 		$PopupContact_On_Subject = stripslashes($_POST['PopupContact_On_Subject']);
 		$PopupContact_Caption = stripslashes($_POST['PopupContact_Caption']);
+		$PopupContact_homeurl = stripslashes($_POST['PopupContact_homeurl']);
 		
 		update_option('PopupContact_title', $PopupContact_title );
 		update_option('PopupContact_On_Homepage', $PopupContact_On_Homepage );
@@ -38,6 +40,7 @@
 		update_option('PopupContact_On_MyEmail', $PopupContact_On_MyEmail );
 		update_option('PopupContact_On_Subject', $PopupContact_On_Subject );
 		update_option('PopupContact_Caption', $PopupContact_Caption );
+		update_option('PopupContact_homeurl', $PopupContact_homeurl );
 		
 		?>
 		<div class="updated fade">
@@ -102,6 +105,11 @@
 			<option value='NO' <?php if($PopupContact_On_Archives == 'NO') { echo 'selected' ; } ?>>NO</option>
 		</select>
 		<p><?php _e('Select YES if you need to display on archive pages.', 'popup-contact'); ?></p>
+		
+		<h3><?php _e('Security Check (Spam Stopper)', 'send-link-to-friend'); ?></h3>
+		<label for="tag-width"><?php _e('Home URL', 'send-link-to-friend'); ?></label>
+		<input name="PopupContact_homeurl" type="text" value="<?php echo $PopupContact_homeurl; ?>"  id="PopupContact_homeurl" size="50" maxlength="500">
+		<p><?php _e('This home URL is for security check. We can submit the form only on this website. ', 'popup-contact'); ?></p>
 		
 		<br />		
 		<input type="hidden" name="PopupContact_form_submit" value="yes"/>

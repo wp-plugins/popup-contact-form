@@ -3,7 +3,7 @@
 Plugin Name: Popup contact form
 Description: Plugin allows user to creat and add the popup contact forms easily on the website. That popup contact form let user to send the emails to site admin.
 Author: Gopi Ramasamy
-Version: 5.2
+Version: 5.3
 Plugin URI: http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/
 Author URI: http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/
 Donate link: http://www.gopiplus.com/work/2012/05/18/popup-contact-form-wordpress-plugin/
@@ -45,7 +45,7 @@ function PopupContact()
         <textarea name="PopupContact_message" class="PopupContact_TextArea" rows="3" id="PopupContact_message"></textarea>
       </div>
       <div id="PopupContact_BoxLabel">
-        <input type="button" name="button" class="PopupContact_Button" value="Submit" onClick="javascript:PopupContact_Submit(this.parentNode,'<?php echo get_option('siteurl'); ?>/wp-content/plugins/popup-contact-form/');">
+        <input type="button" name="button" class="PopupContact_Button" value="Submit" onClick="javascript:PopupContact_Submit(this.parentNode,'<?php echo home_url(); ?>');">
       </div>
     </form>
   </div>
@@ -70,6 +70,8 @@ function PopupContact_install()
 	add_option('PopupContact_On_Subject', "EMAIL-SUBJECT");
 	add_option('PopupContact_On_Captcha', "YES");
 	add_option('PopupContact_Caption', "<img src='".get_option('siteurl')."/wp-content/plugins/popup-contact-form/popup-contact-form.jpg' />");
+	$url = home_url();
+	add_option('PopupContact_homeurl', $url);
 }
 
 function PopupContact_widget($args) 
@@ -155,7 +157,7 @@ function PopupContact_shortcode( $atts )
 	
 	$PopupContact_Caption = get_option('PopupContact_Caption');
 	$PopupContact_title = $title;
-	$siteurl = "'".get_option('siteurl') . "/wp-content/plugins/popup-contact-form/'";
+	$siteurl = "'". home_url() . "'";
 	$close = "javascript:PopupContact_HideForm('PopupContact_BoxContainer','PopupContact_BoxContainerFooter');";
 	$open = 'javascript:PopupContact_OpenForm("PopupContact_BoxContainer","PopupContact_BoxContainerBody","PopupContact_BoxContainerFooter");';
 	
@@ -196,6 +198,76 @@ function PopupContact_textdomain()
 	  load_plugin_textdomain( 'popup-contact', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 }
 
+function PopupContact_plugin_query_vars($vars) 
+{
+	$vars[] = 'popupcontact';
+	return $vars;
+}
+
+function PopupContact_plugin_parse_request($qstring)
+{
+	if (array_key_exists('popupcontact', $qstring->query_vars)) 
+	{
+		$page = $qstring->query_vars['popupcontact'];
+		switch($page)
+		{
+			case 'send-mail':				
+				$PopupContact_name = isset($_POST['PopupContact_name']) ? $_POST['PopupContact_name'] : '';
+				$PopupContact_email = isset($_POST['PopupContact_email']) ? $_POST['PopupContact_email'] : '';
+				if($PopupContact_email <> "")
+				{
+					if (!filter_var($PopupContact_email, FILTER_VALIDATE_EMAIL))
+					{
+						echo "invalid-email";
+					}
+					else
+					{
+						$homeurl = get_option('PopupContact_homeurl');
+						if($homeurl == "")
+						{
+							$homeurl = home_url();
+						}
+						
+						$samedomain = strpos($_SERVER['HTTP_REFERER'], $homeurl);
+						if (($samedomain !== false) && $samedomain < 5) 
+						{
+							$PopupContact_message = stripslashes($_POST['PopupContact_message']);
+							$PopupContact_On_MyEmail = stripslashes(get_option('PopupContact_On_MyEmail'));
+							$PopupContact_On_Subject = stripslashes(get_option('PopupContact_On_Subject'));
+	
+							$sender_email = esc_sql(trim($PopupContact_email));
+							$sender_name = esc_sql(trim($PopupContact_name));
+							$subject = $PopupContact_On_Subject;
+							$message = $PopupContact_message;
+							
+							$headers = "MIME-Version: 1.0" . "\r\n";
+							$headers .= "Content-type:text/html;charset=iso-8859-1" . "\r\n";
+							$headers .= "From: \"$sender_name\" <$sender_email>\n";
+							$headers .= "Return-Path: <" . esc_sql(trim($PopupContact_email)) . ">\n";
+							$headers .= "Reply-To: \"" . esc_sql(trim($PopupContact_name)) . "\" <" . esc_sql(trim($PopupContact_email)) . ">\n";
+							$mailtext = str_replace("\r\n", "<br />", $message);
+							@wp_mail($PopupContact_On_MyEmail, $subject, $mailtext, $headers);
+		
+							echo "mail-sent-successfully";
+						}
+						else
+						{
+							echo "there-was-problem";
+						}
+					}
+				}
+				else
+				{
+					echo "empty-email";
+				}
+				die();
+				break;		
+		}
+	}
+}
+
+add_action('parse_request', 'PopupContact_plugin_parse_request');
+add_filter('query_vars', 'PopupContact_plugin_query_vars');
 add_action('plugins_loaded', 'PopupContact_textdomain');
 add_shortcode( 'popup-contact-form', 'PopupContact_shortcode' );
 add_action('wp_enqueue_scripts', 'PopupContact_add_javascript_files');

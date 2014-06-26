@@ -65,20 +65,35 @@ function PopupContactContents()
   {
 	 if (http_req.status == 200) 
 	 {
-		if(http_req.responseText == "Invalid security code.")
+		result = http_req.responseText;
+		result = result.trim();
+		if(result == "invalid-email")
 		{
-			alert(http_req.responseText);
-			result = http_req.responseText;
-			document.getElementById('PopupContact_alertmessage').innerHTML = result;
+			alert("Invalid email address.");
+			document.getElementById('PopupContact_alertmessage').innerHTML = "Invalid email address.";   
 		}
-		else
+		else if(result == "empty-email")
 		{
-			alert(http_req.responseText);
-			result = http_req.responseText;
-			document.getElementById('PopupContact_alertmessage').innerHTML = "";   
+			alert("Please enter email address.");
+			document.getElementById('PopupContact_alertmessage').innerHTML = "Please enter email address.";   
+		}
+		else if(result == "there-was-problem")
+		{
+			alert("There was a problem with the request.");
+			document.getElementById('PopupContact_alertmessage').innerHTML = "There was a problem with the request.";   
+		}
+		else if(result == "mail-sent-successfully")
+		{
+			alert("Mail sent successfully");
+			document.getElementById('PopupContact_alertmessage').innerHTML = "Details submitted successfully";   
 			document.getElementById("PopupContact_email").value = "";
 			document.getElementById("PopupContact_name").value = "";
 			document.getElementById("PopupContact_message").value = "";
+		}
+		else
+		{
+			alert("There was a problem with the request.");
+			document.getElementById('PopupContact_alertmessage').innerHTML = "There was a problem with the request.";   
 		}
 	 } 
 	 else 
@@ -121,5 +136,5 @@ function PopupContact_Submit(obj, url)
 	}
 	document.getElementById('PopupContact_alertmessage').innerHTML = "Sending..."; 
 	var str = "PopupContact_name=" + encodeURI( document.getElementById("PopupContact_name").value ) + "&PopupContact_email=" + encodeURI( document.getElementById("PopupContact_email").value ) + "&PopupContact_message=" + encodeURI( document.getElementById("PopupContact_message").value ) + "&PopupContact_captcha=nocaptcha";
-	PopupContactPOSTRequest(url+'popup-contact-save.php', str);
+	PopupContactPOSTRequest(url+'/?popupcontact=send-mail', str);
 }
